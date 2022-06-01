@@ -21,7 +21,11 @@ class App {
   }
 
   private database () :void {
-    mongoose.connect('mongodb://27017/partytime', { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect('mongodb://27017/partytime', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    })
   }
 
   private routes () :void {
