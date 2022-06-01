@@ -1,3 +1,7 @@
-const number = 4
+import app from './app'
 
-console.log(number)
+const PORT = 3333
+
+app.listen(PORT, () => {
+  console.log('API is running on PORT: ' + PORT)
+})
