@@ -1,3 +1,3 @@
-const num : number = 3
+const num = 4
 
 console.log(num)
