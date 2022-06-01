@@ -8,8 +8,8 @@ interface UserInterface extends Document {
 
 const UserSchema = new Schema<UserInterface>({
   name: { type: String },
-  email: { type: String, require: true },
-  password: { type: String, require: true }
+  email: { type: String, required: true },
+  password: { type: String, required: true }
 })
 
 export default model<UserInterface>('User', UserSchema)

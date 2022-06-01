@@ -8,3 +8,13 @@ interface PartyInterface extends Document {
     privacy?: boolean;
     userId: ObjectId;
 }
+
+const PartySchema = new Schema<PartyInterface>({
+  title: { type: String, required: true },
+  description: { type: String },
+  partyDate: { type: Date },
+  privacy: { type: Boolean },
+  userId: { type: Schema.Types.ObjectId }
+})
+
+export default model<PartyInterface>('Party', PartySchema)
