@@ -1,3 +1,3 @@
-const num = 4
+const number = 4
 
-console.log(num)
+console.log(number)
