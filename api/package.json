@@ -9,6 +9,8 @@
   "author": "JoaoVitorLima242",
   "license": "ISC",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mongoose": "^5.13.14"
