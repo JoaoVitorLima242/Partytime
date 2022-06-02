@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import AuthRoute from './routes/auth.routes'
 
 class App {
   public express : express.Application
@@ -29,9 +30,7 @@ class App {
   }
 
   private routes () :void {
-    this.express.get('/', (req, res) => {
-      return res.send('API is runnig!')
-    })
+    this.express.use('/api/auth', AuthRoute)
   }
 }
 
