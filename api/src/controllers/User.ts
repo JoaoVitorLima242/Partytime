@@ -76,7 +76,7 @@ class UserController {
 
     // Check if password match
     const checkPassword = await bcript.compare(password, user.password)
-    if (!checkPassword || password === undefined) {
+    if (!checkPassword) {
       return res.status(400).json({ error: 'Senha inválida !' })
     }
 
@@ -91,7 +91,7 @@ class UserController {
         'nossosecret'
       )
 
-      res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token, userId: user._id })
+      res.json({ error: null, msg: 'Você realizou o login com sucesso.', token, userId: user._id })
     } catch (error) {
       res.status(400).json(error)
     }
