@@ -3,11 +3,11 @@ import bcript from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import UserSchema from '../models/User'
 
-type registerUser = {
-    name: string
+type UserRequest = {
     email: string
+    name?: string
     password: string
-    confirmPassword: string
+    confirmPassword?: string
   }
 
 class UserController {
@@ -17,7 +17,7 @@ class UserController {
       email,
       password,
       confirmPassword
-    } : registerUser = req.body
+    } : UserRequest = req.body
 
     // Check for required fields
     if (name === undefined || email === undefined || password === undefined || confirmPassword === undefined) {
@@ -28,7 +28,7 @@ class UserController {
       return res.status(400).json({ error: 'As senhas não conferem !' })
     }
     // Check if user exists
-    const emailExist = await UserSchema.findOne({ email: email })
+    const emailExist = await UserSchema.findOne({ email })
     if (emailExist) {
       return res.status(400).json({ error: 'O e-mail informado já esta em uso !' })
     }
@@ -38,8 +38,8 @@ class UserController {
     const passwordHash = await bcript.hash(password, salt)
 
     const user = new UserSchema({
-      email: email,
-      name: name,
+      email,
+      name,
       password: passwordHash
     })
 
@@ -56,10 +56,26 @@ class UserController {
         'nossosecret'
       )
 
-      res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token: token, userId: newUser._id })
+      res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token, userId: newUser._id })
     } catch (error) {
       res.status(400).json(error)
     }
+  }
+
+  public async Login (req: Request, res: Response) : Promise<Response> {
+    const {
+      email,
+      password
+    } : UserRequest = req.body
+
+    // Check if user exist
+    const user = await UserSchema.findOne({ email })
+
+    if (!user) {
+      return res.status(400).json({ error: 'Não usuario cadastrado com esse email !' })
+    }
+
+    return res.json(user)
   }
 }
 

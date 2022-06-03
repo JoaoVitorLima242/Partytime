@@ -16,6 +16,5 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'object-shorthand': 0
   }
 }
