@@ -70,12 +70,31 @@ class UserController {
 
     // Check if user exist
     const user = await UserSchema.findOne({ email })
-
     if (!user) {
       return res.status(400).json({ error: 'Não usuario cadastrado com esse email !' })
     }
 
-    return res.json(user)
+    // Check if password match
+    const checkPassword = await bcript.compare(password, user.password)
+    if (!checkPassword || password === undefined) {
+      return res.status(400).json({ error: 'Senha inválida !' })
+    }
+
+    try {
+      // Create token
+      const token = jwt.sign(
+        // Payload
+        {
+          name: user.name,
+          id: user._id
+        },
+        'nossosecret'
+      )
+
+      res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token, userId: user._id })
+    } catch (error) {
+      res.status(400).json(error)
+    }
   }
 }
 
