@@ -3,21 +3,21 @@ import bcript from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import UserSchema from '../models/User'
 
-type UserRequest = {
+type AuthRequest = {
     email: string
     name?: string
     password: string
     confirmPassword?: string
   }
 
-class UserController {
+class AuthController {
   public async Register (req: Request, res: Response) :Promise<Response> {
     const {
       name,
       email,
       password,
       confirmPassword
-    } : UserRequest = req.body
+    } : AuthRequest = req.body
 
     // Check for required fields
     if (name === undefined || email === undefined || password === undefined || confirmPassword === undefined) {
@@ -66,7 +66,7 @@ class UserController {
     const {
       email,
       password
-    } : UserRequest = req.body
+    } : AuthRequest = req.body
 
     // Check if user exist
     const user = await UserSchema.findOne({ email })
@@ -98,4 +98,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+export default new AuthController()
