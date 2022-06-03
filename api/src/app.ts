@@ -5,7 +5,7 @@ import AuthRoute from './routes/auth.routes'
 import UserRoute from './routes/user.routes'
 
 class App {
-  public express : express.Application
+  public express: express.Application
 
   public constructor () {
     this.express = express()
@@ -14,7 +14,7 @@ class App {
     this.routes()
   }
 
-  private middlewares () :void {
+  private middlewares (): void {
     // Arquivo que o Projeto ira trabalhar JSON()
     this.express.use(express.json())
     // Pasta aonde iram ficar os arquivos estaticos
@@ -22,7 +22,7 @@ class App {
     this.express.use(cors())
   }
 
-  private database () :void {
+  private database (): void {
     mongoose.connect('mongodb://localhost:27017/partytime', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -32,7 +32,7 @@ class App {
     })
   }
 
-  private routes () :void {
+  private routes (): void {
     this.express.use('/api/auth', AuthRoute)
     this.express.use('/api/user', UserRoute)
   }

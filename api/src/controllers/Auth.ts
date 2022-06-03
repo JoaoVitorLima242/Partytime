@@ -4,20 +4,20 @@ import jwt from 'jsonwebtoken'
 import UserSchema from '../models/User'
 
 type AuthRequest = {
-    email: string
-    name?: string
-    password: string
-    confirmPassword?: string
-  }
+  email: string
+  name?: string
+  password: string
+  confirmPassword?: string
+}
 
 class AuthController {
-  public async Register (req: Request, res: Response) :Promise<Response> {
+  public async Register (req: Request, res: Response): Promise<Response> {
     const {
       name,
       email,
       password,
       confirmPassword
-    } : AuthRequest = req.body
+    }: AuthRequest = req.body
 
     // Check for required fields
     if (name === undefined || email === undefined || password === undefined || confirmPassword === undefined) {
@@ -62,11 +62,11 @@ class AuthController {
     }
   }
 
-  public async Login (req: Request, res: Response) : Promise<Response> {
+  public async Login (req: Request, res: Response): Promise<Response> {
     const {
       email,
       password
-    } : AuthRequest = req.body
+    }: AuthRequest = req.body
 
     // Check if user exist
     const user = await UserSchema.findOne({ email })
