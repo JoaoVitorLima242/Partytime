@@ -8,6 +8,9 @@ const PartySchema = new Schema<PartyInterface>({
   photos: { type: Array },
   privacy: { type: Boolean },
   userId: { type: Schema.Types.ObjectId }
+},
+{
+  timestamps: true
 })
 
 export default model<PartyInterface>('Party', PartySchema)

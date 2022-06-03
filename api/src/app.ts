@@ -22,10 +22,12 @@ class App {
   }
 
   private database () :void {
-    mongoose.connect('mongodb://27017/partytime', {
+    mongoose.connect('mongodb://localhost:27017/partytime', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
+    }, () => {
+      console.log('Banco esta ON')
     })
   }
 
