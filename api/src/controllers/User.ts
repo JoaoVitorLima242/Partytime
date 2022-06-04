@@ -10,7 +10,7 @@ class UserControllers {
 
     try {
       const user = await UserSchema.findOne({ _id: id }, { password: 0 })
-      res.json({ error: null, user })
+      return res.json({ error: null, user })
     } catch (error) {
       res.status(400).json({ error: 'O usuário não foi encontrado!' })
     }
