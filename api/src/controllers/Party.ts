@@ -23,15 +23,13 @@ class PartyControllers {
     }
 
     if (!token) {
-      return res.status(400).json({ error: 'Acesso negado!' })
+      return res.status(401).json({ error: 'Acesso negado!' })
     }
 
     const userByToken = await Token.getUser(res, token)
     const userId = userByToken._id.toString()
 
     try {
-      const user = await UserSchema.findOne({ _id: userId })
-
       const photos: string[] = []
 
       if (files && files.length > 0) {
@@ -54,10 +52,10 @@ class PartyControllers {
         const newParty = await party.save()
         res.json({ error: null, msg: 'Evento criado com sucesso!', data: newParty })
       } catch (error) {
-        return res.status(400).json({ error: 'Acesso negado!' })
+        return res.status(400).json(error)
       }
     } catch (error) {
-      return res.status(400).json({ error: 'Acesso negado!' })
+      return res.status(400).json(error)
     }
   }
 }
