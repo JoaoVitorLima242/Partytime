@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import AuthRoute from './routes/auth.routes'
 import UserRoute from './routes/user.routes'
+import PartyRoute from './routes/party.routes'
 
 class App {
   public express: express.Application
@@ -37,6 +38,7 @@ class App {
   private routes (): void {
     this.express.use('/api/auth', AuthRoute)
     this.express.use('/api/user', UserRoute)
+    this.express.use('/api/party', PartyRoute)
   }
 }
 
