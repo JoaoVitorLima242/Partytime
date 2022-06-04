@@ -17,10 +17,22 @@ class UserControllers {
     }
   }
 
-  public async updateUserByToken (req: Request, res: Response): Promise<void> {
-    const token = req.header('auth-token')
+  public async updateUserByToken (req: Request, res: Response): Promise<Response> {
+    const {
+      id,
+      password,
+      confirmPassword
+    } = req.body
 
-    await Token.getUser(req, res, token)
+    const token = req.header('auth-token')
+    if (!token) {
+      return res.status(401).json({ error: 'Acesso negado!' })
+    }
+    const user = await Token.getUser(res, token)
+
+    if (user._id.toString() !== id) {
+      return res.status(401).json({ error: 'Acesso negado!' })
+    }
   }
 }
 

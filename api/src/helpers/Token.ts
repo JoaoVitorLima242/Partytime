@@ -24,13 +24,8 @@ class Token {
     }
   }
 
-  public getUser = async (req: TokenRequest, res: Response, token: string): Promise<UserInterface | Response> => {
-    if (!token) {
-      return res.status(401).json({ error: 'Acesso negado!' })
-    }
-
+  public getUser = async (res: Response, token: string): Promise<UserInterface> => {
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
-
     const user = await UserSchema.findOne({ _id: (<jwt.JwtPayload>decoded).id })
 
     return user
