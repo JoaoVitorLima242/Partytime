@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import UserSchema from '../models/User'
+import Token from '../helpers/Token'
 
 class UserControllers {
   public async getUserById (req: Request, res: Response): Promise<Response> {
@@ -16,8 +17,10 @@ class UserControllers {
     }
   }
 
-  public async updateUserByToken (req: Request, res: Response): Promise<Response> {
-    const token = req.header('auth-header')
+  public async updateUserByToken (req: Request, res: Response): Promise<void> {
+    const token = req.header('auth-token')
+
+    await Token.getUser(req, res, token)
   }
 }
 

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import UserSchema from '../models/User'
+import { UserInterface } from '../models/User/index.d'
 
 interface TokenRequest extends Request {
   user?: string | jwt.JwtPayload;
@@ -23,12 +24,16 @@ class Token {
     }
   }
 
-  public getUser = async (req: TokenRequest, res: Response, token: string): Promise<Response> => {
+  public getUser = async (req: TokenRequest, res: Response, token: string): Promise<UserInterface | Response> => {
     if (!token) {
       return res.status(401).json({ error: 'Acesso negado!' })
     }
 
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
+
+    const user = await UserSchema.findOne({ _id: (<jwt.JwtPayload>decoded).id })
+
+    return user
   }
 }
 
