@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import UserController from '../controllers/User'
-import checkToken from '../helpers/check-token'
+import TokenHelpers from '../helpers/Token'
 
 const routes = Router()
 
-routes.get('/:id', checkToken, UserController.getUserById)
-
+routes.get('/:id', TokenHelpers.check, UserController.getUserById)
+/* routes.put('/', TokenHelpers.check, UserController.updateUserByToken)
+ */
 export default routes
