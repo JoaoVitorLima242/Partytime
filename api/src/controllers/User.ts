@@ -56,8 +56,8 @@ class UserControllers {
     }
 
     try {
-      const updatedUser = await UserSchema.findOneAndUpdate({ _id: user._id }, { $set: updateUser }, { new: true })
-      return res.json({ error: null, msg: 'Usuario atualizado com sucesso!', data: updateUser })
+      const updatedUserResponse = await UserSchema.findOneAndUpdate({ _id: user._id }, { $set: updateUser }, { new: true })
+      return res.json({ error: null, msg: 'Usuario atualizado com sucesso!', data: updatedUserResponse })
     } catch (error) {
       return res.status(401).json({ error })
     }
