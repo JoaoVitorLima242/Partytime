@@ -1,8 +1,19 @@
 import { Request, Response } from 'express'
+import bcrypt from 'bcrypt'
+import UserSchema from '../models/User'
 
 class UserControllers {
-  public async index (req: Request, res: Response): Promise<Response> {
-    return res.send('teste')
+  public async getUserById (req: Request, res: Response): Promise<Response> {
+    const {
+      id
+    } = req.params
+
+    try {
+      const user = await UserSchema.findOne({ _id: id }, { password: 0 })
+      res.json({ error: null, user })
+    } catch (error) {
+      res.status(400).json({ error: 'O usuário não foi encontrado!' })
+    }
   }
 }
 
