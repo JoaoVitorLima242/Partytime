@@ -5,6 +5,6 @@ import TokenHelpers from '../helpers/Token'
 const routes = Router()
 
 routes.get('/:id', TokenHelpers.check, UserController.getUserById)
-/* routes.put('/', TokenHelpers.check, UserController.updateUserByToken)
- */
+routes.put('/', TokenHelpers.check, UserController.updateUserByToken)
+
 export default routes

@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 import AuthRoute from './routes/auth.routes'
 import UserRoute from './routes/user.routes'
 
@@ -20,6 +21,7 @@ class App {
     // Pasta aonde iram ficar os arquivos estaticos
     this.express.use(express.static('public'))
     this.express.use(cors())
+    dotenv.config()
   }
 
   private database (): void {

@@ -53,7 +53,7 @@ class AuthController {
           name: newUser.name,
           id: newUser._id
         },
-        'nossosecret'
+        process.env.TOKEN_SECRET
       )
 
       res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token, userId: newUser._id })
@@ -88,7 +88,7 @@ class AuthController {
           name: user.name,
           id: user._id
         },
-        'nossosecret'
+        process.env.TOKEN_SECRET
       )
 
       res.json({ error: null, msg: 'Você realizou o login com sucesso.', token, userId: user._id })
