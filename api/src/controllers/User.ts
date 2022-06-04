@@ -3,6 +3,13 @@ import bcrypt from 'bcrypt'
 import UserSchema from '../models/User'
 import Token from '../helpers/Token'
 
+type UpdateUser = {
+    email: string;
+    name: string;
+    password?: string;
+    updatedAt: Date
+}
+
 class UserControllers {
   public async getUserById (req: Request, res: Response): Promise<Response> {
     const {
@@ -20,6 +27,8 @@ class UserControllers {
   public async updateUserByToken (req: Request, res: Response): Promise<Response> {
     const {
       id,
+      name,
+      email,
       password,
       confirmPassword
     } = req.body
@@ -32,6 +41,28 @@ class UserControllers {
 
     if (user._id.toString() !== id) {
       return res.status(401).json({ error: 'Acesso negado!' })
+    }
+
+    const updateUser: UpdateUser = {
+      email,
+      name,
+      updatedAt: new Date()
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(401).json({ error: 'As senhas não conferem!' })
+    } else if (password === confirmPassword && password !== undefined) {
+      const salt = await bcrypt.genSalt(12)
+      const passwordHash = await bcrypt.hash(password, salt)
+
+      updateUser.password = passwordHash
+    }
+
+    try {
+      const updatedUser = await UserSchema.findOneAndUpdate({ _id: user._id }, { $set: updateUser }, { new: true })
+      return res.json({ error: null, msg: 'Usuario atualizado com sucesso!', data: updateUser })
+    } catch (error) {
+      return res.status(401).json({ error })
     }
   }
 }
