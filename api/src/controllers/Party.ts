@@ -22,12 +22,8 @@ class PartyControllers {
       return res.status(400).json({ error: 'Preencha pelo menos nome, descrição e data' })
     }
 
-    if (!token) {
-      return res.status(401).json({ error: 'Acesso negado!' })
-    }
-
     const userByToken = await Token.getUser(res, token)
-    const userId = userByToken._id.toString()
+    const userId: string = userByToken._id.toString()
 
     try {
       const photos: string[] = []
@@ -45,7 +41,6 @@ class PartyControllers {
         photos,
         privacy,
         userId
-
       })
 
       try {

@@ -34,9 +34,6 @@ class UserControllers {
     } = req.body
 
     const token = req.header('auth-token')
-    if (!token) {
-      return res.status(401).json({ error: 'Acesso negado!' })
-    }
     const user = await Token.getUser(res, token)
 
     if (user._id.toString() !== id) {
