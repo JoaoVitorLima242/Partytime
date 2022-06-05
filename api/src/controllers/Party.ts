@@ -97,6 +97,31 @@ class PartyControllers {
       return res.status(400).json(error)
     }
   }
+
+  public async getParty (req: Request, res: Response): Promise<Response> {
+    const {
+      id
+    } = req.params
+
+    try {
+      const party = await PartySchema.findOne({ _id: id })
+
+      if (party.privacy === false) {
+        return res.json({ error: null, party })
+      } else {
+        const token = req.header('auth-token')
+        const user = await Token.getUser(res, token)
+
+        if (user._id === party._id) {
+          res.json({ error: null, party })
+        } else {
+          return res.status(400).json({ error: 'Acesso negado!' })
+        }
+      }
+    } catch (err) {
+      return res.status(400).json({ error: 'Evento não existe!' })
+    }
+  }
 }
 
 export default new PartyControllers()
