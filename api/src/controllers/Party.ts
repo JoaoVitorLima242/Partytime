@@ -4,13 +4,16 @@ import jwt from 'jsonwebtoken'
 import UserSchema from '../models/User'
 import PartySchema from '../models/Party'
 import Token from '../helpers/Token'
-import { diskStorage } from '../helpers/Storage'
+import { partyTimeStorage } from '../helpers/Storage'
 
-type reqCreate = {
+interface reqCreate {
   title: string;
   description: string;
   partyDate: string;
   privacy: string;
+}
+interface reqUpdate extends reqCreate {
+  userId: string;
 }
 class PartyControllers {
   public async createParty (req: Request, res: Response): Promise<Response> {
@@ -22,6 +25,10 @@ class PartyControllers {
     }: reqCreate = req.body
 
     const files = []
+
+    if (req.files) {
+      files.push(req.files)
+    }
     const token = req.header('auth-token')
 
     if (title === undefined || description === undefined || partyDate === undefined) {
@@ -121,6 +128,31 @@ class PartyControllers {
     } catch (err) {
       return res.status(400).json({ error: 'Evento não existe!' })
     }
+  }
+
+  public async updateParty (req: Request, res: Response): Promise<Response> {
+    const {
+      title,
+      description,
+      partyDate,
+      privacy,
+      userId
+    }: reqUpdate = req.body
+
+    // TIPAR FOTOS
+    const files = []
+
+    if (req.files) {
+      files.push(req.files)
+    }
+
+    /* const token = req.header('auth-token')
+
+    if (title === undefined || description === undefined || partyDate === undefined) {
+      return res.status(400).json({ error: 'Preencha pelo menos nome, descrição e data' })
+    } */
+
+    console.log(files)
   }
 
   public async deleteParty (req: Request, res: Response): Promise<Response> {
