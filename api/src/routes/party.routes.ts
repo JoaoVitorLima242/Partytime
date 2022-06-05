@@ -9,5 +9,6 @@ const routes = Router()
 const upload = multer({ storage: diskStorage })
 
 routes.post('/', Token.check, upload.fields([{ name: 'photos' }]), PartyControllers.createParty)
+routes.get('/', PartyControllers.getParties)
 
 export default routes

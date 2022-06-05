@@ -53,6 +53,17 @@ class PartyControllers {
       return res.status(400).json(error)
     }
   }
+
+  public async getParties (req: Request, res: Response): Promise<Response> {
+    try {
+      const parties = await PartySchema.find({ privacy: false }).sort([['_id', -1]])
+
+      console.log(parties)
+      res.json({ error: null, parties })
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
 }
 
 export default new PartyControllers()
