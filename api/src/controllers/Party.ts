@@ -122,6 +122,22 @@ class PartyControllers {
       return res.status(400).json({ error: 'Evento não existe!' })
     }
   }
+
+  public async deleteParty (req: Request, res: Response): Promise<Response> {
+    const {
+      id
+    } = req.params
+
+    const token = req.header('auth-token')
+    const user = await Token.getUser(res, token)
+
+    try {
+      await PartySchema.deleteOne({ _id: id, userId: user._id })
+      return res.json({ error: null, msg: 'Evento removido com sucesso!' })
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
 }
 
 export default new PartyControllers()
