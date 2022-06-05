@@ -63,6 +63,19 @@ class PartyControllers {
       return res.status(400).json(error)
     }
   }
+
+  public async getUserParties (req: Request, res: Response): Promise<Response> {
+    try {
+      const token = req.header('auth-token')
+
+      const user = await Token.getUser(res, token)
+      const parties = await PartySchema.find({ userId: user._id })
+
+      return res.json({ error: null, parties })
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
 }
 
 export default new PartyControllers()
