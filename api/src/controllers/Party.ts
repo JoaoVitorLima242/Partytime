@@ -6,6 +6,12 @@ import PartySchema from '../models/Party'
 import Token from '../helpers/Token'
 import { diskStorage } from '../helpers/Storage'
 
+type reqCreate = {
+  title: string;
+  description: string;
+  partyDate: string;
+  privacy: string;
+}
 class PartyControllers {
   public async createParty (req: Request, res: Response): Promise<Response> {
     const {
@@ -13,7 +19,7 @@ class PartyControllers {
       description,
       partyDate,
       privacy
-    } = req.body
+    }: reqCreate = req.body
 
     const files = []
     const token = req.header('auth-token')
@@ -72,6 +78,21 @@ class PartyControllers {
       const parties = await PartySchema.find({ userId: user._id })
 
       return res.json({ error: null, parties })
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+
+  public async getUserPartyById (req: Request, res: Response): Promise<Response> {
+    try {
+      const { partyId } = req.params
+      const token = req.header('auth-token')
+
+      const user = await Token.getUser(res, token)
+
+      const party = await PartySchema.findOne({ _id: partyId, userId: user._id })
+
+      return res.json({ error: null, party })
     } catch (error) {
       return res.status(400).json(error)
     }
