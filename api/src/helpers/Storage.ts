@@ -1,7 +1,7 @@
 import multer from 'multer'
 import path from 'path'
 
-export const diskStorage = multer.diskStorage({
+export const partyTimeStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/img/')
   },

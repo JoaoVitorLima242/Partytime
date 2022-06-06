@@ -5,6 +5,7 @@ import UserSchema from '../models/User'
 import PartySchema from '../models/Party'
 import Token from '../helpers/Token'
 import { partyTimeStorage } from '../helpers/Storage'
+import { ObjectId } from 'mongoose'
 
 interface reqCreate {
   title: string;
@@ -13,7 +14,9 @@ interface reqCreate {
   privacy: string;
 }
 interface reqUpdate extends reqCreate {
-  userId: string;
+  userId: ObjectId;
+  id: string;
+  photos: any[]
 }
 class PartyControllers {
   public async createParty (req: Request, res: Response): Promise<Response> {
@@ -136,7 +139,9 @@ class PartyControllers {
       description,
       partyDate,
       privacy,
-      userId
+      userId,
+      id,
+      photos
     }: reqUpdate = req.body
 
     // TIPAR FOTOS
@@ -146,13 +151,45 @@ class PartyControllers {
       files.push(req.files)
     }
 
-    /* const token = req.header('auth-token')
+    const token = req.header('auth-token')
 
     if (title === undefined || description === undefined || partyDate === undefined) {
       return res.status(400).json({ error: 'Preencha pelo menos nome, descrição e data' })
-    } */
+    }
 
-    console.log(files)
+    const userByToken = await Token.getUser(res, token)
+
+    if (userId != userByToken._id) {
+      return res.status(400).json({ error: 'Acesso negado' })
+    }
+
+    const party = {
+      title,
+      description,
+      partyDate,
+      privacy,
+      userId,
+      photos: []
+    }
+
+    const newPhotos: string[] = []
+
+    if (files && files.length > 0) {
+      files.forEach((photo, i) => {
+        newPhotos[i] = photo.path
+      })
+
+      party.photos = newPhotos
+    }
+
+    console.log(userId)
+
+    try {
+      const updatedParty = await PartySchema.findOneAndUpdate({ _id: id }, {$set: party}, {new: true})
+      return res.json({ error: null, updatedParty })
+    } catch (error) {
+      res.status(400).json(error)
+    }
   }
 
   public async deleteParty (req: Request, res: Response): Promise<Response> {
