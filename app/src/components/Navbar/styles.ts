@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
             font-size: 20px;
             color: #fff;
             text-decoration: none;
+            margin: 0 10px;
         }
     }
 
