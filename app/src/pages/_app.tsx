@@ -6,13 +6,12 @@ function App ({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>React Avançado - Boilerplate</title>
-        <link rel="shortcut icon" href="/img/icon-512.png" />
-        <link rel="apple-touch-icon" href="/img/icon-512.png" />
+        <title>PartyTime</title>
         <meta
           name="description"
           content="A simple project starter to work with TypeScript, React, NextJS and Styled Components"
         />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossOrigin="anonymous"></link>
       </Head>
       <GlobalStyles />
       <Component {...pageProps} />
