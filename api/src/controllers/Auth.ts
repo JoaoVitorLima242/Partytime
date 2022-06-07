@@ -20,7 +20,7 @@ class AuthController {
     }: AuthRequest = req.body
 
     // Check for required fields
-    if (name === undefined || email === undefined || password === undefined || confirmPassword === undefined) {
+    if (name === '' || email === '' || password === '' || confirmPassword === '') {
       return res.status(400).json({ error: 'Por favor, preencha todos os campos !' })
     }
     // Check if passwords match
@@ -58,7 +58,7 @@ class AuthController {
 
       res.json({ error: null, msg: 'Você realizou o cadastro com sucesso.', token, userId: newUser._id })
     } catch (error) {
-      res.status(400).json(error)
+      res.status(400).json({error})
     }
   }
 
@@ -93,7 +93,7 @@ class AuthController {
 
       res.json({ error: null, msg: 'Você realizou o login com sucesso.', token, userId: user._id })
     } catch (error) {
-      res.status(400).json(error)
+      res.status(400).json({error})
     }
   }
 }
