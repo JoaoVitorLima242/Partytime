@@ -1,11 +1,34 @@
 import type { NextPage } from 'next'
+import { useState, MouseEvent } from 'react'
+// Components
 import Navbar from 'components/Navbar'
+// Styles
 import Head from 'next/head'
 import { Wrapper } from './styles'
 import { Form, Input } from 'assets/styles/form'
 import { Button } from 'assets/styles/buttons'
+import { Alert } from 'assets/styles/alert'
 
 const Register: NextPage = () => {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const register = async (e: MouseEvent): Promise<void> => {
+    e.preventDefault()
+
+    const data = {
+      name,
+      email,
+      password,
+      confirmPassword
+    }
+
+    const dataJSON = JSON.stringify(data)
+
+    console.log(dataJSON)
+  }
   return (
       <div>
       <Head>
@@ -20,21 +43,21 @@ const Register: NextPage = () => {
         <Form maxWidth={700}>
             <div>
               <label>Nome</label>
-              <Input placeholder='Coloque seu nome' name='name' id='name'/>
+              <Input placeholder='Coloque seu nome' value={name} name='name' id='name' onChange={e => setName(e.target.value)}/>
             </div>
             <div>
               <label>Email</label>
-              <Input placeholder='Coloque seu email' name='email' id='email'/>
+              <Input placeholder='Coloque seu email' value={email} name='email' id='email' onChange={e => setEmail(e.target.value)}/>
             </div>
             <div>
               <label>Senha</label>
-              <Input placeholder='Coloque sua senha' name='password' id='password'/>
+              <Input placeholder='Coloque sua senha' value={password} name='password' id='password' onChange={e => setPassword(e.target.value)}/>
             </div>
             <div>
               <label>Confirme sua senha</label>
-              <Input placeholder='Confirme sua senha' name='confirmPassword' id='confirmPassword'/>
+              <Input placeholder='Confirme sua senha' value={confirmPassword} name='confirmPassword' id='confirmPassword'onChange={e => setConfirmPassword(e.target.value)}/>
             </div>
-            <Button className='mt-5'>Cadastrar</Button>
+            <Button className='mt-5' onClick={e => register(e)}>Cadastrar</Button>
         </Form>
       </Wrapper>
   </div>
