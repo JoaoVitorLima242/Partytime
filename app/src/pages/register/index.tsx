@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, useContext } from 'react'
 import { useRouter } from 'next/router'
-// Styles
 import Head from 'next/head'
+
+import { AuthContext } from 'contexts/Auth/AuthContext'
+// Styles
 import { Wrapper } from './styles'
 import { Form, Input } from 'assets/styles/form'
 import { Button } from 'assets/styles/buttons'
@@ -10,6 +12,8 @@ import { Alert } from 'assets/styles/alert'
 
 const Register: NextPage = () => {
   const router = useRouter()
+
+  const { RegisterUserRequest } = useContext(AuthContext)
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -26,34 +30,7 @@ const Register: NextPage = () => {
       password,
       confirmPassword
     }
-
-    const dataJSON = JSON.stringify(data)
-
-    await fetch('http://localhost:3001/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: dataJSON
-    })
-      .then((result) => result.json())
-      .then((data) => {
-        let auth = false
-
-        if (data.error) {
-          setAlert({ msg: data.error, type: 'danger' })
-        } else {
-          auth = true
-
-          setAlert({ msg: data.msg })
-        }
-
-        if (!auth) {
-          setTimeout(() => {
-            setAlert(null)
-          }, 3000)
-        } else {
-          router.push('/')
-        }
-      })
+    await RegisterUserRequest(data)
   }
   return (
       <div>

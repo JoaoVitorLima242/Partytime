@@ -1,5 +1,5 @@
 import Navbar from 'components/Navbar'
-import { AuthProvider } from 'contexts/AuthContext'
+import { AuthProvider } from 'contexts/Auth/AuthContext'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import GlobalStyles from '../assets/styles/global'
