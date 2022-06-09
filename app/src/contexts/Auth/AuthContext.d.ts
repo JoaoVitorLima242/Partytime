@@ -1,3 +1,4 @@
+import { type } from 'os'
 import React from 'react'
 
 export type AuthProviderProps = {
@@ -11,6 +12,18 @@ export type RegisterData = {
     confirmPassword: string;
 }
 
+export type RegisterUserType = {
+    error: null;
+    msg: string;
+    token: string;
+    userId: string;
+}
+
+export type RegisterUserReturn = {
+    error: boolean;
+    msg: string;
+}
+
 export interface AuthCtx {
-    RegisterUserRequest: (data: RegisterData) => Promise<void>
+    RegisterUser: (data: RegisterData) => Promise<RegisterUserReturn>
 }

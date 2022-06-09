@@ -1,26 +1,32 @@
-import React, { createContext } from 'react'
+import { setCookie } from 'nookies'
+import React, { createContext, useEffect, useState } from 'react'
+import { RegisterRequest } from 'services/user'
 // types
-import { AuthCtx, AuthProviderProps, RegisterData } from './AuthContext.d'
+import { AuthCtx, AuthProviderProps, RegisterData, RegisterUserReturn } from './AuthContext.d'
 
 export const AuthContext = createContext({} as AuthCtx)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const RegisterUserRequest = async (data: RegisterData): Promise<void> => {
-    const dataJSON = JSON.stringify(data)
+  const RegisterUser = async (data: RegisterData): Promise<RegisterUserReturn> => {
+    const { error, token, userId, msg } = await RegisterRequest(data)
 
-    await fetch('http://localhost:3001/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: dataJSON
+    if (error) {
+      return { error: true, msg: error }
+    }
+
+    /* useEffect(() => {
+      const {}
+    }, []) */
+
+    setCookie(undefined, 'auth-token', token, {
+      maxAge: 60 * 60 * 3 // 3 hours
     })
-      .then((result) => result.json())
-      .then((data) => {
-        console.log(data)
-      })
+
+    return { error: false, msg }
   }
 
   return (
-        <AuthContext.Provider value={{ RegisterUserRequest }}>
+        <AuthContext.Provider value={{ RegisterUser }}>
             {children}
         </AuthContext.Provider>
   )

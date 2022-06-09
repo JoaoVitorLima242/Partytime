@@ -13,7 +13,7 @@ import { Alert } from 'assets/styles/alert'
 const Register: NextPage = () => {
   const router = useRouter()
 
-  const { RegisterUserRequest } = useContext(AuthContext)
+  const { RegisterUser } = useContext(AuthContext)
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -30,7 +30,10 @@ const Register: NextPage = () => {
       password,
       confirmPassword
     }
-    await RegisterUserRequest(data)
+    const result = await RegisterUser(data)
+    /* if (result.error) {
+      setAlert({ msg: error })
+    } */
   }
   return (
       <div>
