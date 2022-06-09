@@ -1,11 +1,12 @@
 import Navbar from 'components/Navbar'
+import { AuthProvider } from 'contexts/AuthContext'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import GlobalStyles from '../assets/styles/global'
 
 function App ({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <AuthProvider>
       <Head>
         <title>PartyTime</title>
         <meta
@@ -17,7 +18,7 @@ function App ({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <Navbar/>
       <Component {...pageProps} />
-    </>
+    </AuthProvider>
   )
 }
 

@@ -44,8 +44,6 @@ const Register: NextPage = () => {
           auth = true
 
           setAlert({ msg: data.msg })
-          localStorage.setItem('auth-token', data.token)
-          localStorage.setItem('userId', data.userId)
         }
 
         if (!auth) {

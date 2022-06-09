@@ -6,13 +6,6 @@ import { useRouter } from 'next/router'
 const Profile: NextPage = () => {
   const router = useRouter()
 
-  useEffect(() => {
-    const token = localStorage.getItem('auth-token')
-    if (!token) {
-      router.push('/')
-    }
-  }, [])
-
   return (
     <div>
       <Head>
