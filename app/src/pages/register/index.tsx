@@ -30,10 +30,10 @@ const Register: NextPage = () => {
       password,
       confirmPassword
     }
-    const result = await RegisterUser(data)
-    /* if (result.error) {
-      setAlert({ msg: error })
-    } */
+    const response = await RegisterUser(data)
+    if (response.error) {
+      setAlert({ msg: response.msg, type: 'danger' })
+    }
   }
   return (
       <div>
