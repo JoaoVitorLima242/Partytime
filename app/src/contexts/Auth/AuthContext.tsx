@@ -3,13 +3,13 @@ import React, { createContext, useEffect, useState } from 'react'
 import { api } from 'services/axios'
 import { getUserById, registerRequest } from 'services/user'
 // types
-import { AuthCtx, AuthProviderProps, RegisterData, RegisterUserReturn } from './AuthContext.d'
+import { AuthCtx, AuthProviderProps, RegisterData, RegisterUserReturn, UserProps } from './AuthContext.d'
 
 export const AuthContext = createContext({} as AuthCtx)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState({} as any)
+  const [user, setUser] = useState({} as UserProps)
   const [userId, setUserId] = useState('')
 
   useEffect(() => {

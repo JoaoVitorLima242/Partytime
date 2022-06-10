@@ -19,17 +19,26 @@ export type RegisterUserType = {
     userId: string;
 }
 
+export type UserProps = {
+    _id: string;
+    email: string;
+    name: string;
+    createdAt: string
+    updateAt: string
+    password?: string
+}
+
 export type RegisterUserReturn = {
     error: boolean;
     msg: string;
 }
-
-export type userInfo = {
-
+export type GetUserByIdReturn = {
+    error: boolean;
+    msg: string;
 }
 
 export interface AuthCtx {
     RegisterUser: (data: RegisterData) => Promise<RegisterUserReturn>;
     isAuthenticated: boolean;
-    user: any;
+    user: UserProps;
 }

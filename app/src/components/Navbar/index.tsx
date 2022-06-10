@@ -8,17 +8,18 @@ const Navbar = () => {
   return (
          <Wrapper>
             <div>
-                <Image
-                    src='/img/partytimelogo.png'
-                    width={70}
-                    height={70}
-                    alt=''
-                />
+              <Link href="/">
+                  <Image
+                      src='/img/partytimelogo.png'
+                      width={70}
+                      height={70}
+                      alt='Imagem de um cone de festas soltando faiscas'
+                  />
+              </Link>
               <h2>Partytime</h2>
             </div>
             <ul>
                 <li>
-                    <Link href="/">HOME</Link>
                     { isAuthenticated
                       ? <>
                           <Link href="/profile">PROFILE</Link>

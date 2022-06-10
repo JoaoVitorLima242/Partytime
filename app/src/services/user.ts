@@ -1,4 +1,4 @@
-import { RegisterData, RegisterUserType } from 'contexts/Auth/AuthContext.d'
+import { RegisterData, RegisterUserType, UserProps } from 'contexts/Auth/AuthContext.d'
 import { api } from './axios'
 
 export const registerRequest = async (data: RegisterData): Promise<RegisterUserType> => {
@@ -10,7 +10,7 @@ export const registerRequest = async (data: RegisterData): Promise<RegisterUserT
   }
 }
 
-export const getUserById = async (id: string): Promise<any> => {
+export const getUserById = async (id: string): Promise<UserProps> => {
   try {
     const response = await api.post(`/api/user/${id}`)
     return response.data
