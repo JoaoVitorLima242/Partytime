@@ -25,5 +25,6 @@ export type RegisterUserReturn = {
 }
 
 export interface AuthCtx {
-    RegisterUser: (data: RegisterData) => Promise<RegisterUserReturn>
+    RegisterUser: (data: RegisterData) => Promise<RegisterUserReturn>;
+    isAuthenticated: boolean;
 }
