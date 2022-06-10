@@ -10,7 +10,7 @@ export const registerRequest = async (data: RegisterData): Promise<RegisterUserT
   }
 }
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string): Promise<any> => {
   try {
     const response = await api.post(`/api/user/${id}`)
     return response.data
