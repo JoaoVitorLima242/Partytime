@@ -33,7 +33,7 @@ export type UserProps = {
     password?: string
 }
 
-export type RegisterUserReturn = {
+export type AuthUserReturn = {
     error: boolean;
     msg: string;
 }
@@ -43,7 +43,8 @@ export type GetUserByIdReturn = {
 }
 
 export interface AuthCtx {
-    RegisterUser: (data: RegisterData) => Promise<RegisterUserReturn>;
+    registerUser: (data: RegisterData) => Promise<AuthUserReturn>;
     isAuthenticated: boolean;
     user: UserProps;
+    logInUser: (data: RegisterData) => Promise<AuthUserReturn>;
 }

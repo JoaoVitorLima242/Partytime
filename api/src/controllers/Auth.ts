@@ -71,7 +71,7 @@ class AuthController {
     // Check if user exist
     const user = await UserSchema.findOne({ email })
     if (!user) {
-      return res.status(400).json({ error: 'Não usuario cadastrado com esse email !' })
+      return res.status(400).json({ error: 'Não ha usuario cadastrado com esse email !' })
     }
 
     // Check if password match

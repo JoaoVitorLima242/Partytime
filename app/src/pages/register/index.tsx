@@ -15,15 +15,16 @@ import { Button } from 'assets/styles/buttons'
 import { Alert } from 'assets/styles/alert'
 
 const Register: NextPage = () => {
-  const { RegisterUser } = useContext(AuthContext)
+  const { registerUser } = useContext(AuthContext)
   const { register, handleSubmit } = useForm()
 
   const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
 
   const handleRegister = async (data): Promise<void> => {
-    const response = await RegisterUser(data)
-    if (response.error) {
-      setAlert({ msg: response.msg, type: 'danger' })
+    const { error, msg } = await registerUser(data)
+    if (error) {
+      setAlert({ msg, type: 'danger' })
+      return
     }
 
     Router.push('/profile')

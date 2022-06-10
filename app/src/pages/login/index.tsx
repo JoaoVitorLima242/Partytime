@@ -1,57 +1,32 @@
 import type { NextPage } from 'next'
-import { useState, MouseEvent } from 'react'
-import { useRouter } from 'next/router'
-import { Wrapper } from './styles'
-// Styles
+import { useState, useContext } from 'react'
+import Router from 'next/router'
 import Head from 'next/head'
+import { useForm } from 'react-hook-form'
+
+import { AuthContext } from 'contexts/Auth/AuthContext'
+// Styles
+import { Wrapper } from './styles'
 import { Form, Input } from 'assets/styles/form'
 import { Button } from 'assets/styles/buttons'
 import { Alert } from 'assets/styles/alert'
 
 const Login: NextPage = () => {
-  const router = useRouter()
+  const { register, handleSubmit } = useForm()
+  const { logInUser } = useContext(AuthContext)
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
 
-  const login = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault()
-
-    const data = {
-      email,
-      password
+  const handleLogIn = async (data): Promise<void> => {
+    console.log(data)
+    const { error, msg } = await logInUser(data)
+    if (error) {
+      console.log(error)
+      setAlert({ msg, type: 'danger' })
+      return
     }
 
-    const dataJSON = JSON.stringify(data)
-
-    await fetch('http://localhost:3001/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: dataJSON
-    })
-      .then((result) => result.json())
-      .then((data) => {
-        let auth = false
-
-        if (data.error) {
-          setAlert({ msg: data.error, type: 'danger' })
-        } else {
-          auth = true
-
-          setAlert({ msg: data.msg })
-          localStorage.setItem('auth-token', data.token)
-          localStorage.setItem('userId', data.userId)
-        }
-
-        if (!auth) {
-          setTimeout(() => {
-            setAlert(null)
-          }, 3000)
-        } else {
-          router.push('/')
-        }
-      })
+    Router.push('/profile')
   }
   return (
     <div>
@@ -63,16 +38,30 @@ const Login: NextPage = () => {
       <Wrapper className='container'>
         <h1>Acesse sua conta</h1>
         <h2>Coloque as suas informações para logar!</h2>
-        <Form maxWidth={700}>
+        <Form maxWidth={700} onSubmit={handleSubmit(handleLogIn)}>
             <div>
               <label>Email</label>
-              <Input placeholder='Coloque seu email' value={email} name='email' id='email' onChange={e => setEmail(e.target.value)}/>
+              <Input
+                {...register('email')}
+                placeholder='Coloque seu email'
+                name='email'
+                id='email'
+                type='email'
+                required
+              />
             </div>
             <div>
               <label>Senha</label>
-              <Input type='password' placeholder='Coloque sua senha' value={password} name='password' id='password' onChange={e => setPassword(e.target.value)}/>
+              <Input
+                {...register('password')}
+                type='password'
+                placeholder='Coloque sua senha'
+                name='password'
+                id='password'
+                required
+               />
             </div>
-            <Button className='mt-5' onClick={e => login(e)}>Acessar</Button>
+            <Button className='mt-5'>Acessar</Button>
         </Form>
         {alert ? <Alert type={alert?.type}>{alert?.msg}</Alert> : null}
       </Wrapper>
