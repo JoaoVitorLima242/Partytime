@@ -32,8 +32,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     api.defaults.headers.common['auth-header'] = token
 
-    Router.push('/profile')
-
     return { error: false, msg }
   }
 

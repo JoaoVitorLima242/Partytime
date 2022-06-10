@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useState, MouseEvent, useContext } from 'react'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import Head from 'next/head'
 
 import { AuthContext } from 'contexts/Auth/AuthContext'
@@ -11,8 +11,6 @@ import { Button } from 'assets/styles/buttons'
 import { Alert } from 'assets/styles/alert'
 
 const Register: NextPage = () => {
-  const router = useRouter()
-
   const { RegisterUser } = useContext(AuthContext)
 
   const [name, setName] = useState('')
@@ -34,6 +32,8 @@ const Register: NextPage = () => {
     if (response.error) {
       setAlert({ msg: response.msg, type: 'danger' })
     }
+
+    Router.push('/profile')
   }
   return (
       <div>
