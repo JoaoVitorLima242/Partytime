@@ -67,6 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logOutUser = () => {
     destroyCookie(undefined, 'auth-token')
     setUser(null)
+    api.defaults.headers.common['auth-token'] = ''
 
     Router.push('/')
   }
