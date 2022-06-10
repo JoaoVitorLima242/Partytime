@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
     ul {
         list-style: none;
 
-        a {
+        a, span {
             font-size: 20px;
             color: #fff;
             text-decoration: none;

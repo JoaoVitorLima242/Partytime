@@ -43,8 +43,9 @@ export type GetUserByIdReturn = {
 }
 
 export interface AuthCtx {
-    registerUser: (data: RegisterData) => Promise<AuthUserReturn>;
     isAuthenticated: boolean;
-    user: UserProps;
+    user: UserProps | null;
+    registerUser: (data: RegisterData) => Promise<AuthUserReturn>;
     logInUser: (data: RegisterData) => Promise<AuthUserReturn>;
+    logOutUser: () => void;
 }

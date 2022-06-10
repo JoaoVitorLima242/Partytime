@@ -5,7 +5,7 @@ import { Wrapper } from './styles'
 import { AuthContext } from 'contexts/Auth/AuthContext'
 
 const Navbar = () => {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, logOutUser } = useContext(AuthContext)
   return (
          <Wrapper>
             <div>
@@ -24,6 +24,7 @@ const Navbar = () => {
                     { isAuthenticated
                       ? <>
                           <Link href="/profile">PROFILE</Link>
+                          <span onClick={() => logOutUser()}>LOGOUT</span>
                         </>
                       : <>
                           <Link href="/register">CADASTRO</Link>

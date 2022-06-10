@@ -1,15 +1,16 @@
-import { parseCookies, setCookie } from 'nookies'
+import Router from 'next/router'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { createContext, useEffect, useState } from 'react'
 import { api } from 'services/axios'
 import { getUserById, logInRequest, registerRequest } from 'services/user'
 // types
-import { AuthCtx, AuthProviderProps, LoginData, RegisterData, AuthUserReturn, UserProps } from './AuthContext.d'
+import { AuthCtx, AuthProviderProps, LoginData, RegisterData, UserProps } from './AuthContext.d'
 
 export const AuthContext = createContext({} as AuthCtx)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState({} as UserProps)
+  const [user, setUser] = useState({} as UserProps | null)
   const [userId, setUserId] = useState('')
 
   useEffect(() => {
@@ -63,8 +64,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return { error: false, msg }
   }
 
+  const logOutUser = () => {
+    destroyCookie(undefined, 'auth-token')
+    setUser(null)
+
+    Router.push('/')
+  }
+
   return (
-        <AuthContext.Provider value={{ registerUser, isAuthenticated, user, logInUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, logInUser, registerUser, logOutUser }}>
             {children}
         </AuthContext.Provider>
   )
