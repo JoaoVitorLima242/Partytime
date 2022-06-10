@@ -12,7 +12,12 @@ export type RegisterData = {
     confirmPassword: string;
 }
 
-export type RegisterUserType = {
+export type LoginData = {
+    email: string;
+    password: string;
+}
+
+export type AuthResponseData = {
     error: null;
     msg: string;
     token: string;

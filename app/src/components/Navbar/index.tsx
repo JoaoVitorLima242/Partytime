@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Wrapper } from './styles'
 import { AuthContext } from 'contexts/Auth/AuthContext'
+
 const Navbar = () => {
   const { isAuthenticated } = useContext(AuthContext)
   return (

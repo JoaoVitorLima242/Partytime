@@ -45,6 +45,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return { error: false, msg }
   }
 
+  const logInUser = async () => {
+
+  }
+
   return (
         <AuthContext.Provider value={{ RegisterUser, isAuthenticated, user }}>
             {children}
