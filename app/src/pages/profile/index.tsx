@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
+import { getApiClient } from 'services/axios'
 
 const Profile: NextPage = () => {
   const router = useRouter()
@@ -25,7 +26,6 @@ export default Profile
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { 'auth-token': token } = parseCookies(ctx)
-
   if (!token) {
     return {
       redirect: {
