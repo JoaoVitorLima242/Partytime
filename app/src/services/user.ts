@@ -20,9 +20,9 @@ export const logInRequest = async (data: LoginData): Promise<AuthResponseData> =
   }
 }
 
-export const getUserById = async (id: string): Promise<UserProps> => {
+export const getUser = async (): Promise<UserProps> => {
   try {
-    const response = await api.post(`/api/user/${id}`)
+    const response = await api.get('/api/user')
     return response.data
   } catch (error) {
     return error.response.data
