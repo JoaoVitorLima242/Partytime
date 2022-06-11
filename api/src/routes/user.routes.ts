@@ -4,7 +4,7 @@ import Token from '../helpers/Token'
 
 const routes = Router()
 
-routes.get('/:id', Token.check, UserController.getUserById)
+routes.get('/', Token.check, UserController.getUserByToken)
 routes.put('/', Token.check, UserController.updateUserByToken)
 
 export default routes

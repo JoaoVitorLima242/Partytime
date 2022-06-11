@@ -11,13 +11,17 @@ type UpdateUser = {
 }
 
 class UserControllers {
-  public async getUserById (req: Request, res: Response): Promise<Response> {
+  public async getUserByToken (req: Request, res: Response): Promise<Response> {
     const {
       id
     } = req.params
 
     try {
-      const user = await UserSchema.findOne({ _id: id }, { password: 0 })
+      const token = req.header('auth-token')
+      if (!token) {
+        return res.status(401).json({ error: 'Acesso negado!' })
+      }
+      const user = await Token.getUser(res, token)
       return res.json({ error: null, user })
     } catch (error) {
       res.status(400).json({ error: 'O usuário não foi encontrado!' })
