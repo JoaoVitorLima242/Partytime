@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       fetchUser()
     }
-  }, [])
+  }, [userId])
 
   const registerUser = async (data: RegisterData) => {
     const { error, token, userId, msg } = await registerRequest(data)
@@ -67,6 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logOutUser = () => {
     destroyCookie(undefined, 'auth-token')
     setUser(null)
+    setUserId('')
     api.defaults.headers.common['auth-token'] = ''
 
     Router.push('/')

@@ -15,6 +15,7 @@ const Navbar = () => {
                       width={70}
                       height={70}
                       alt='Imagem de um cone de festas soltando faiscas'
+                      style={{ cursor: 'pointer' }}
                   />
               </Link>
               <h2>Partytime</h2>

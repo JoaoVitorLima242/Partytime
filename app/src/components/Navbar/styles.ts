@@ -26,6 +26,7 @@ export const Wrapper = styled.div`
             color: #fff;
             text-decoration: none;
             margin: 0 10px;
+            cursor: pointer;
         }
     }
 
