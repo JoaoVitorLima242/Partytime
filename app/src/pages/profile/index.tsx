@@ -30,8 +30,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const apiClient = getApiClient(ctx)
 
-  const response = await apiClient.get('api/user')
-
   if (!token) {
     return {
       redirect: {
@@ -40,6 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+  const response = await apiClient.get('api/user')
 
   return {
     props: {

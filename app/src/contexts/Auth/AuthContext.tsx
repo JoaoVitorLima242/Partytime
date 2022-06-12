@@ -2,7 +2,7 @@ import Router from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { createContext, useEffect, useState } from 'react'
 import { api } from 'services/axios'
-import { getUserById, logInRequest, registerRequest } from 'services/user'
+import { logInRequest, registerRequest, getUser } from 'services/user'
 // types
 import { AuthCtx, AuthProviderProps, LoginData, RegisterData, UserProps } from './AuthContext.d'
 
@@ -20,11 +20,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsAuthenticated(true)
 
       const fetchUser = async () => {
-        const user = await getUserById(userId)
+        const user = await getUser()
         setUser(user)
       }
 
       fetchUser()
+    } else {
+      setIsAuthenticated(false)
     }
   }, [userId])
 
