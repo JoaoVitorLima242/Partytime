@@ -24,12 +24,13 @@ const Navbar = () => {
                 <li>
                     { isAuthenticated
                       ? <>
-                          <Link href="/profile">PROFILE</Link>
-                          <span onClick={() => logOutUser()}>LOGOUT</span>
+                          <Link href="/dashboard">Dashboard</Link>
+                          <Link href="/profile">Configurações</Link>
+                          <span onClick={() => logOutUser()}>Logout</span>
                         </>
                       : <>
-                          <Link href="/register">CADASTRO</Link>
-                          <Link href="/login">LOGIN</Link>
+                          <Link href="/login">Login</Link>
+                          <Link href="/register">Cadastro</Link>
                         </>
                     }
                 </li>

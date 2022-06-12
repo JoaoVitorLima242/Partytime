@@ -26,7 +26,7 @@ const Register = () => {
       return
     }
 
-    Router.push('/profile')
+    Router.push('/dashboard')
   }
   return (
       <div>

@@ -17,7 +17,6 @@ const Login = () => {
   const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
 
   const handleLogIn = async (data): Promise<void> => {
-    console.log(data)
     const { error, msg } = await logInUser(data)
     if (error) {
       console.log(error)
@@ -25,7 +24,7 @@ const Login = () => {
       return
     }
 
-    Router.push('/profile')
+    Router.push('/dashboard')
   }
   return (
     <div>
