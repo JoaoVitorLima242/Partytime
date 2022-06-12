@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import { useState, useContext } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
@@ -14,7 +13,7 @@ import { Form, Input } from 'assets/styles/form'
 import { Button } from 'assets/styles/buttons'
 import { Alert } from 'assets/styles/alert'
 
-const Register: NextPage = () => {
+const Register = () => {
   const { registerUser } = useContext(AuthContext)
   const { register, handleSubmit } = useForm()
 

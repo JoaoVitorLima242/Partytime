@@ -1,13 +1,14 @@
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
 import { getApiClient } from 'services/axios'
+import { UserProps } from 'contexts/Auth/AuthContext.d'
 
-const Profile: NextPage = ({ user }: any) => {
-  const router = useRouter()
+type ProfileProps = {
+  user: UserProps
+}
 
+const Profile = ({ user }: ProfileProps) => {
   return (
     <div>
       <Head>
@@ -39,10 +40,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   const response = await apiClient.get('api/user')
+  const user: UserProps = response.data.user
 
   return {
     props: {
-      user: response.data.user
+      user
     }
   }
 }
