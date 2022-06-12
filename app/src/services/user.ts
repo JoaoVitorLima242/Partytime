@@ -28,3 +28,12 @@ export const getUser = async (): Promise<UserProps> => {
     return error.response.data
   }
 }
+
+export const editUser = async (data: RegisterData): Promise<AuthResponseData> => {
+  try {
+    const response = await api.put('/api/user', data)
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
