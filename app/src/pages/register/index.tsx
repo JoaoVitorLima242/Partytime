@@ -22,7 +22,7 @@ const Register = () => {
   const handleRegister = async (data): Promise<void> => {
     const { error, msg } = await registerUser(data)
     if (error) {
-      setAlert({ msg: error, type: 'danger' })
+      setAlert({ msg, type: 'danger' })
       return
     }
 

@@ -34,7 +34,7 @@ export type UserProps = {
 }
 
 export type AuthUserReturn = {
-    error: string;
+    error: boolean;
     msg: string;
 }
 export type GetUserByIdReturn = {
