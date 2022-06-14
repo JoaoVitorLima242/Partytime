@@ -7,7 +7,7 @@ export const TableParties = styled.table`
     margin-top: 20px;
 
     thead tr {
-        background-color: #2F6CEC;
+        background-color: #303030;
         color: #ffffff;
         text-align: left;
     }
@@ -18,17 +18,13 @@ export const TableParties = styled.table`
     }
 
     tbody tr {
-        border-bottom: 1px solid #dddddd;
+        border-bottom: 1px solid #303030;
     }
     tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
     tbody tr:last-of-type {
-        border-bottom: 4px solid #2F6CEC;   
-    }
-    tbody tr.active-row {
-        font-weight: bold;
-        color: #2F6CEC;
+        border-bottom: 4px solid #303030;   
     }
 
 `
