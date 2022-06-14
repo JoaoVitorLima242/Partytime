@@ -14,7 +14,6 @@ req: next.NextApiRequest | express.Request} | null | undefined
   })
 
   api.interceptors.request.use(config => {
-    console.log(config)
     return config
   })
 

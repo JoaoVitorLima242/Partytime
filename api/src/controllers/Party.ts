@@ -27,10 +27,10 @@ class PartyControllers {
       privacy
     }: reqCreate = req.body
 
-    const files = []
+    let files = []
 
     if (req.files) {
-      files.push(req.files)
+      files = (req as any).files.photos
     }
     const token = req.header('auth-token')
 

@@ -1,15 +1,19 @@
+import { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import { useForm } from 'react-hook-form'
+import Router from 'next/router'
 
 // styles
 import { Checkbox, Form, Input, InputFile, TextArea } from 'assets/styles/form'
 import { Wrapper } from './styles'
+import { Alert } from 'assets/styles/alert'
+import { Button } from 'assets/styles/buttons'
 // api
 import { getApiClient } from 'services/axios'
+import { createPartyRequest } from 'services/party'
 // types
 import { UserProps } from 'contexts/Auth/AuthContext.d'
-import { Button } from 'assets/styles/buttons'
 
 type CreatePartyProps = {
     user: UserProps
@@ -18,8 +22,30 @@ type CreatePartyProps = {
 const CreateParty = ({ user }: CreatePartyProps) => {
   const { register, handleSubmit } = useForm()
 
-  const createParty = (data) => {
-    console.log(data)
+  const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
+
+  const createParty = async (data) => {
+    const formData = new FormData()
+
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    formData.append('partyDate', data.partyDate)
+    formData.append('privacy', data.privacy)
+
+    if (data.photos.length > 0) {
+      for (const i of Object.keys(data.photos)) {
+        formData.append('photos', data.photos[i])
+      }
+    }
+
+    const { msg, error } = await createPartyRequest(formData)
+    if (error) {
+      console.log(error)
+      setAlert({ msg, type: 'danger' })
+      return
+    }
+
+    Router.push('/dashboard')
   }
 
   return (
@@ -83,6 +109,7 @@ const CreateParty = ({ user }: CreatePartyProps) => {
             </Checkbox>
             <Button className='mt-5'>Criar festa</Button>
             </Form>
+            {alert ? <Alert type={alert?.type}>{alert?.msg}</Alert> : null}
         </Wrapper>
   )
 }
