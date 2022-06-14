@@ -8,9 +8,15 @@ import { TableParties } from './styles'
 
 type TableProps = {
     parties: PartyProps[]
+    handleDeleteParties: (id: string) => Promise<void>
   }
 
-const Table = ({ parties }: TableProps) => {
+const Table = (props: TableProps) => {
+  const {
+    parties,
+    handleDeleteParties
+  } = props
+
   return (
         <TableParties>
             <thead>
@@ -32,7 +38,7 @@ const Table = ({ parties }: TableProps) => {
                             <ButtonIcon color='#009879'>
                                 <FaPen />
                             </ButtonIcon>
-                            <ButtonIcon color='#f71427'>
+                            <ButtonIcon color='#f71427' onClick={() => handleDeleteParties(party._id)}>
                                 <FaTrashAlt />
                             </ButtonIcon>
                         </td>

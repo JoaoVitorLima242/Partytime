@@ -4,19 +4,37 @@ import { parseCookies } from 'nookies'
 import Router from 'next/router'
 import Head from 'next/head'
 
-import { getApiClient } from 'services/axios'
+import { api, getApiClient } from 'services/axios'
 // types
-import { PartyProps } from 'services/party'
+import { deletePartiesRequest, PartyProps } from 'services/party'
 // styles
 import { Button } from 'assets/styles/buttons'
 import { Wrapper } from './styles'
 import Table from 'components/Table'
+import { useState } from 'react'
+import { Alert } from 'assets/styles/alert'
 
 type DashboardProps = {
-  parties: PartyProps[]
+  partiesSSR: PartyProps[]
 }
 
-const Dashboard = ({ parties }: DashboardProps) => {
+const Dashboard = ({ partiesSSR }: DashboardProps) => {
+  const [parties, setParties] = useState(partiesSSR)
+  const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
+
+  const handleDeleteParties = async (id: string) => {
+    const { msg, error } = await deletePartiesRequest(id)
+
+    if (error) {
+      setAlert({ msg, type: 'danger' })
+      return
+    }
+
+    const partiesFilter = parties.filter(party => party._id !== id)
+
+    setParties(partiesFilter)
+  }
+
   return (
     <div>
       <Head>
@@ -30,9 +48,13 @@ const Dashboard = ({ parties }: DashboardProps) => {
           <h1>Dashboard</h1>
           <Button onClick={() => Router.push('party/create')}>Criar festa</Button>
         </div>
+        {alert ? <Alert type={alert?.type}>{alert?.msg}</Alert> : null}
           {parties && parties.length > 0
             ? <div>
-                <Table parties={parties} />
+                <Table
+                  handleDeleteParties={handleDeleteParties}
+                  parties={parties}
+                />
               </div>
             : <div>
                 <h4>Você não tem nenhuma festa! <Link href="/party/create">Crie uma festa aqui!</Link></h4>
@@ -63,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      parties: response.data.parties
+      partiesSSR: response.data.parties
     }
   }
 }
