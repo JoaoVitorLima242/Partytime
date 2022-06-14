@@ -32,7 +32,7 @@ const Table = ({ parties }: TableProps) => {
                             <ButtonIcon color='#009879'>
                                 <FaPen />
                             </ButtonIcon>
-                            <ButtonIcon color='#eb4250'>
+                            <ButtonIcon color='#f71427'>
                                 <FaTrashAlt />
                             </ButtonIcon>
                         </td>
