@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { api, getApiClient } from 'services/axios'
-import { getParties, getPartyByIdRequest } from 'services/party'
+import { getParties, getPartyByIdRequest, PartyProps } from 'services/party'
 
 const EditParty = ({ party }) => {
   return (
@@ -12,27 +12,26 @@ const EditParty = ({ party }) => {
 
 export default EditParty
 
-export const getStaticPaths: any = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const response = await getParties()
   const parties = response.parties
 
-  const paths = parties?.map((party) => {
+  const paths = parties?.map((party: PartyProps) => {
     return {
       params: {
-        id: party?._id
+        id: party._id.toString()
       }
     }
   })
-
   return {
     paths,
     fallback: false
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const id = ctx.params
-  const response = await getPartyByIdRequest('62a8c2dba798d01cd296c03c')
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id
+  const response = await getPartyByIdRequest(id)
   const party = response.party
 
   return {
