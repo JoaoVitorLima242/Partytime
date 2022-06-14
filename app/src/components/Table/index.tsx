@@ -1,10 +1,13 @@
+import Router from 'next/router'
 // icons
-import { ButtonIcon } from 'assets/styles/buttons'
 import { FaPen, FaSearch, FaTrashAlt } from 'react-icons/fa'
+
 // types
 import { PartyProps } from 'services/party'
 // styles
 import { TableParties } from './styles'
+import { ButtonIcon } from 'assets/styles/buttons'
+import Link from 'next/link'
 
 type TableProps = {
     parties: PartyProps[]
@@ -35,9 +38,14 @@ const Table = (props: TableProps) => {
                             <ButtonIcon>
                                 <FaSearch />
                             </ButtonIcon>
-                            <ButtonIcon color='#009879'>
-                                <FaPen />
-                            </ButtonIcon>
+                            <Link href={`/party/edit/${party._id}`}>
+                                <ButtonIcon
+                                    color='#009879'
+                                    /* onClick={() => Router.push(`/party/edit/${party._id}`)} */
+                                >
+                                    <FaPen />
+                                </ButtonIcon>
+                            </Link>
                             <ButtonIcon color='#f71427' onClick={() => handleDeleteParties(party._id)}>
                                 <FaTrashAlt />
                             </ButtonIcon>

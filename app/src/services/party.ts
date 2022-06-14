@@ -1,5 +1,5 @@
 import { ResponseData } from 'contexts/Auth/AuthContext.d'
-import { api } from './axios'
+import { api, getApiClient } from './axios'
 
 export type PartyProps = {
     _id: string;
@@ -20,9 +20,26 @@ export const createPartyRequest = async (data: FormData): Promise<ResponseData> 
   }
 }
 
-export const getUserPartiesRequest = async (): Promise<ResponseData> => {
+export const getUserPartiesRequest = async (ctx: any): Promise<any> => {
+  const api = getApiClient(ctx)
   try {
     const response = await api.get('/api/party/user')
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+export const getParties = async (): Promise<any> => {
+  try {
+    const response = await api.get('/api/party/')
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+export const getPartyByIdRequest = async (id: string): Promise<any> => {
+  try {
+    const response = await api.get(`/api/party/${id}`)
     return response.data
   } catch (error) {
     return error.response.data

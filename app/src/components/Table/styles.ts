@@ -18,7 +18,7 @@ export const TableParties = styled.table`
     }
 
     tbody tr {
-        border-bottom: 1px solid #303030;
+        border-bottom: 1px solid #aaa;
     }
     tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
