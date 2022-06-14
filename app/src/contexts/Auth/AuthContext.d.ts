@@ -1,4 +1,3 @@
-import { type } from 'os'
 import React from 'react'
 
 export type AuthProviderProps = {
@@ -17,7 +16,7 @@ export type LoginData = {
     password: string;
 }
 
-export type AuthResponseData = {
+export type ResponseData = {
     error: null;
     msg: string;
     token: string;

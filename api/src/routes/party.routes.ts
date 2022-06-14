@@ -10,10 +10,10 @@ const upload = multer({ storage: partyTimeStorage })
 
 routes.post('/', Token.check, upload.fields([{ name: 'photos' }]), PartyControllers.createParty)
 routes.get('/', PartyControllers.getParties)
+routes.get('/user', Token.check, PartyControllers.getUserParties)
 routes.get('/:id', PartyControllers.getParty)
 routes.put('/', Token.check, upload.fields([{ name: 'photos' }]), PartyControllers.updateParty)
 routes.delete('/:id', Token.check, PartyControllers.deleteParty)
-routes.get('/user', Token.check, PartyControllers.getUserParties)
 routes.get('/user/:partyId', Token.check, PartyControllers.getUserPartyById)
 
 export default routes
