@@ -6,7 +6,7 @@ import { config } from 'process'
 import { GetStaticPathsContext } from 'next'
 
 export function getApiClient (ctx?: Pick<next.NextPageContext, 'req'> | {
-req: next.NextApiRequest | express.Request} | null | undefined |any
+req: next.NextApiRequest | express.Request} | null | undefined
 ) {
   const { 'auth-token': token } = parseCookies(ctx)
 

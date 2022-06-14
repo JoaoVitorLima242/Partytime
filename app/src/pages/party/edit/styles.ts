@@ -15,4 +15,13 @@ export const Wrapper = styled.div`
         font-size: 20px;
         margin-top: 10px;
     }
+
+`
+
+export const LitleImage = styled.div`
+    max-width: 200px;
+
+    img {
+        width: 100%;
+    }
 `

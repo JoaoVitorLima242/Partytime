@@ -20,8 +20,8 @@ class App {
     // Arquivo que o Projeto ira trabalhar JSON()
     this.express.use(express.json())
     // Pasta aonde iram ficar os arquivos estaticos
-    this.express.use(express.static('../public'))
     this.express.use(cors())
+    this.express.use(express.static('public'))
     dotenv.config()
   }
 

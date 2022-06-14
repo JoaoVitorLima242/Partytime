@@ -86,7 +86,7 @@ const CreateParty = ({ user }: CreatePartyProps) => {
               />
             </div>
             <div>
-              <label>Data da festa</label>
+              <label>Fotos da festa</label>
               <InputFile
                 {...register('photos')}
                 placeholder='Poste a sua foto'

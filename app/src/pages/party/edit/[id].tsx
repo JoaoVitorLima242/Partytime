@@ -6,10 +6,12 @@ import moment from 'moment'
 // api
 import { getParties, getPartyByIdRequest, PartyProps } from 'services/party'
 // styles
-import { Wrapper } from './styles'
+import { LitleImage, Wrapper } from './styles'
 import { Button } from 'assets/styles/buttons'
 import { Checkbox, Form, Input, InputFile, TextArea } from 'assets/styles/form'
 import { Alert } from 'assets/styles/alert'
+import { parseCookies } from 'nookies'
+import Image from 'next/image'
 
 type EditPartyProps = {
   party: PartyProps
@@ -65,7 +67,7 @@ const EditParty = ({ party }: EditPartyProps) => {
           />
         </div>
         <div>
-          <label>Data da festa</label>
+          <label>Fotos da festa</label>
           <InputFile
             {...register('photos')}
             placeholder='Poste a sua foto'
@@ -74,6 +76,27 @@ const EditParty = ({ party }: EditPartyProps) => {
             type='file'
             multiple
           />
+        </div>
+        <div>
+          {party.photos && party.photos.length > 0
+            ? <div className='mt-2'>
+                <h3>Fotos existentes:</h3>
+                <div className='d-flex'>
+                  {party.photos.map(photo => {
+                    const localPhoto = photo.replace('public', 'http://localhost:3001')
+                    return (
+                      <LitleImage key={`photo${photo}`}>
+                        <img
+                          src={localPhoto}
+                          alt="Festaa"
+                          />
+                      </LitleImage>
+                    )
+                  })}
+                </div>
+              </div>
+            : null
+          }
         </div>
         <Checkbox>
           <label>Festa privada</label>
