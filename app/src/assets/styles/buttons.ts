@@ -13,3 +13,7 @@ export const Button = styled.button<ButtonInterface>`
     border: none;
     background-color: ${(props) => props.color ? `${props.color}` : '#2F6CEC'};
 `
+export const ButtonIcon = styled.button<ButtonInterface>`
+    border: none;
+    background-color: transparent;
+`
