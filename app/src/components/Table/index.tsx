@@ -14,23 +14,25 @@ const Table = ({ parties }: TableProps) => {
   return (
         <TableParties>
             <thead>
-                <th>Numero</th>
-                <th>Nome</th>
-                <th>Ação</th>
+                <tr>
+                    <th>Numero</th>
+                    <th>Nome</th>
+                    <th>Ação</th>
+                </tr>
             </thead>
             <tbody>
                 {parties.map((party, count) => (
                     <tr key={party._id}>
                         <td>{count + 1}</td>
-                        <td>{party.title}</td>
+                        <td style={{ width: '75%' }}>{party.title}</td>
                         <td>
                             <ButtonIcon>
                                 <FaSearch />
                             </ButtonIcon>
-                            <ButtonIcon>
+                            <ButtonIcon color='#009879'>
                                 <FaPen />
                             </ButtonIcon>
-                            <ButtonIcon>
+                            <ButtonIcon color='#eb4250'>
                                 <FaTrashAlt />
                             </ButtonIcon>
                         </td>

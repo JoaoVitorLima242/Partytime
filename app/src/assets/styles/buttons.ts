@@ -11,9 +11,11 @@ export const Button = styled.button<ButtonInterface>`
     color: white;
     margin: 10px 0;
     border: none;
-    background-color: ${(props) => props.color ? `${props.color}` : '#2F6CEC'};
+    background-color: ${({ color }) => color ? `${color}` : '#2F6CEC'};
 `
 export const ButtonIcon = styled.button<ButtonInterface>`
     border: none;
+    padding: 10px;
+    color: ${({ color }) => color || '#303030'};
     background-color: transparent;
 `
