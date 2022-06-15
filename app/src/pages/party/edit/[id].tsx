@@ -14,6 +14,7 @@ import { Button } from 'assets/styles/buttons'
 import { Checkbox, Form, Input, InputFile, TextArea } from 'assets/styles/form'
 import { Alert } from 'assets/styles/alert'
 import Head from 'next/head'
+import { adjustURLImage } from 'helpers/adjustURLImage'
 
 type EditPartyProps = {
   party: PartyProps
@@ -117,11 +118,10 @@ const EditParty = ({ party }: EditPartyProps) => {
                   <h3>Fotos existentes:</h3>
                   <div className='d-flex'>
                     {party.photos.map(photo => {
-                      const localPhoto = photo.replace('public', 'http://localhost:3001')
                       return (
                         <LitleImage key={`photo${photo}`}>
                           <img
-                            src={localPhoto}
+                            src={adjustURLImage(photo)}
                             alt="Festaa"
                             />
                         </LitleImage>
