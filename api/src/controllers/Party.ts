@@ -172,8 +172,6 @@ class PartyControllers {
       photos: []
     }
 
-    console.log(party)
-
     const newPhotos: string[] = []
 
     if (files && files.length > 0) {

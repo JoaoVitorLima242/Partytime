@@ -27,8 +27,6 @@ const EditParty = ({ party }: EditPartyProps) => {
   const editParty = async (data) => {
     const { 'auth-token': token } = parseCookies()
 
-    console.log(token)
-
     const formData = new FormData()
 
     formData.append('id', data.id)
@@ -44,10 +42,9 @@ const EditParty = ({ party }: EditPartyProps) => {
       }
     }
 
-    const { msg, error } = await EditPartyRequest(token, formData)
+    const { error } = await EditPartyRequest(token, formData)
     if (error) {
-      console.log(error)
-      setAlert({ msg, type: 'danger' })
+      setAlert({ msg: error, type: 'danger' })
       return
     }
 
