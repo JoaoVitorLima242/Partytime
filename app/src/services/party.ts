@@ -20,16 +20,6 @@ export type PartyResponse = {
   error: unknown
 }
 
-export const getUserPartiesRequest = async (ctx: unknown): Promise<PartiesResponse> => {
-  const api = getApiClient(ctx)
-  try {
-    const response = await api.get('/api/party/user')
-    return response.data
-  } catch (error) {
-    return error.response.data
-  }
-}
-
 export const getParties = async (): Promise<PartiesResponse> => {
   try {
     const response = await api.get('/api/party/')
@@ -39,7 +29,6 @@ export const getParties = async (): Promise<PartiesResponse> => {
   }
 }
 
-/* ajustar bug na pagina /edit/[id] na function getStaticProps */
 export const getPartyByIdRequest = async (id: unknown): Promise<PartyResponse> => {
   try {
     const response = await api.get(`/api/party/${id}`)
@@ -49,9 +38,42 @@ export const getPartyByIdRequest = async (id: unknown): Promise<PartyResponse> =
   }
 }
 
+export const getUserPartiesRequest = async (ctx): Promise<PartiesResponse> => {
+  const api = getApiClient(ctx)
+  try {
+    const response = await api.get('/api/party/user')
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+export const getUserPartyByIdRequest = async (ctx, id: unknown): Promise<PartyResponse> => {
+  const api = getApiClient(ctx)
+  try {
+    const response = await api.get(`/api/party/user/${id}`)
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+
 export const createPartyRequest = async (data: FormData): Promise<ResponseData> => {
   try {
     const response = await api.post('/api/party', data)
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+export const EditPartyRequest = async (token: string, data: FormData): Promise<ResponseData> => {
+  if (token) {
+    api.defaults.headers['auth-token'] = token
+  }
+  api.interceptors.request.use(config => {
+    return config
+  })
+  try {
+    const response = await api.put('/api/party', data)
     return response.data
   } catch (error) {
     return error.response.data

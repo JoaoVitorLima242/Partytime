@@ -145,10 +145,10 @@ class PartyControllers {
     }: reqUpdate = req.body
 
     // TIPAR FOTOS
-    const files = []
+    let files = []
 
     if (req.files) {
-      files.push(req.files)
+      files = (req as any).files.photos
     }
 
     const token = req.header('auth-token')
@@ -172,6 +172,8 @@ class PartyControllers {
       photos: []
     }
 
+    console.log(party)
+
     const newPhotos: string[] = []
 
     if (files && files.length > 0) {
@@ -181,8 +183,6 @@ class PartyControllers {
 
       party.photos = newPhotos
     }
-
-    console.log(userId)
 
     try {
       const updatedParty = await PartySchema.findOneAndUpdate({ _id: id }, {$set: party}, {new: true})

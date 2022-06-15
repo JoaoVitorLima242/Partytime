@@ -1,17 +1,18 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Router from 'next/router'
 import moment from 'moment'
+import { parseCookies } from 'nookies'
 
 // api
-import { getParties, getPartyByIdRequest, PartyProps } from 'services/party'
+import { EditPartyRequest, getUserPartyByIdRequest, PartyProps } from 'services/party'
+import { getApiClient } from 'services/axios'
 // styles
 import { LitleImage, Wrapper } from './styles'
 import { Button } from 'assets/styles/buttons'
 import { Checkbox, Form, Input, InputFile, TextArea } from 'assets/styles/form'
 import { Alert } from 'assets/styles/alert'
-import { parseCookies } from 'nookies'
-import Image from 'next/image'
 
 type EditPartyProps = {
   party: PartyProps
@@ -19,11 +20,38 @@ type EditPartyProps = {
 
 const EditParty = ({ party }: EditPartyProps) => {
   const { register, handleSubmit } = useForm()
+  const [checkbox, setCheckbox] = useState(party.privacy)
 
   const [alert, setAlert] = useState<{msg: string, type?: string} | null>()
 
-  const editParty = (data) => {
-    console.log(data)
+  const editParty = async (data) => {
+    const { 'auth-token': token } = parseCookies()
+
+    console.log(token)
+
+    const formData = new FormData()
+
+    formData.append('id', data.id)
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    formData.append('partyDate', data.partyDate)
+    formData.append('privacy', data.privacy)
+    formData.append('userId', data.userId)
+
+    if (data.photos.length > 0) {
+      for (const i of Object.keys(data.photos)) {
+        formData.append('photos', data.photos[i])
+      }
+    }
+
+    const { msg, error } = await EditPartyRequest(token, formData)
+    if (error) {
+      console.log(error)
+      setAlert({ msg, type: 'danger' })
+      return
+    }
+
+    Router.push('/dashboard')
   }
 
   return (
@@ -32,6 +60,7 @@ const EditParty = ({ party }: EditPartyProps) => {
       <h4>Basta preencher o formulário!</h4>
       <Form onSubmit={handleSubmit(editParty)}>
         <input type='hidden' value={party.userId} {...register('userId')}/>
+        <input type='hidden' value={party._id} {...register('id')}/>
         <div>
           <label>Titulo</label>
           <Input
@@ -63,7 +92,8 @@ const EditParty = ({ party }: EditPartyProps) => {
             id='partyDate'
             type='date'
             required
-            defaultValue={moment(party.partyDate).format('yyyy-DD-MM')}
+            defaultValue={moment(party.partyDate).format('YYYY-MM-DD')}
+
           />
         </div>
         <div>
@@ -106,7 +136,8 @@ const EditParty = ({ party }: EditPartyProps) => {
             name='privacy'
             id='privacy'
             type='checkbox'
-            checked={party.privacy}
+            checked={checkbox}
+            onChange={() => setCheckbox(!checkbox)}
           />
         </Checkbox>
         <Button className='mt-5'>Criar festa</Button>
@@ -118,26 +149,19 @@ const EditParty = ({ party }: EditPartyProps) => {
 
 export default EditParty
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await getParties()
-  const parties = response.parties
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'auth-token': token } = parseCookies(ctx)
 
-  const paths = parties?.map((party: PartyProps) => {
+  if (!token) {
     return {
-      params: {
-        id: party._id.toString()
+      redirect: {
+        destination: '/',
+        permanent: false
       }
     }
-  })
-  return {
-    paths,
-    fallback: false
   }
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id
-  const response = await getPartyByIdRequest(id)
+  const id = ctx.params?.id
+  const response = await getUserPartyByIdRequest(ctx, id)
   const party = response.party
 
   return {
