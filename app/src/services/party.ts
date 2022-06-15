@@ -29,11 +29,18 @@ export const getParties = async (): Promise<PartiesResponse> => {
   }
 }
 
-export const getPartyByIdRequest = async (id: unknown): Promise<PartyResponse> => {
+export const getPartyByIdRequest = async (id: unknown, ctx?: unknown): Promise<PartyResponse> => {
   try {
-    const response = await api.get(`/api/party/${id}`)
-    return response.data
+    if (ctx) {
+      const apiCtx = getApiClient(ctx)
+      const response = await apiCtx.get(`/api/party/${id}`)
+      return response.data
+    } else {
+      const response = await api.get(`/api/party/${id}`)
+      return response.data
+    }
   } catch (error) {
+    console.log(error)
     return error.response.data
   }
 }

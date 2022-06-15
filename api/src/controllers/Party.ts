@@ -116,13 +116,14 @@ class PartyControllers {
     try {
       const party = await PartySchema.findOne({ _id: id })
 
+      
       if (party.privacy === false) {
         return res.json({ error: null, party })
       } else {
         const token = req.header('auth-token')
         const user = await Token.getUser(res, token)
 
-        if (user._id === party._id) {
+        if (user._id.toString() === party.userId.toString()) {
           res.json({ error: null, party })
         } else {
           return res.status(400).json({ error: 'Acesso negado!' })

@@ -35,9 +35,11 @@ const Table = (props: TableProps) => {
                         <td>{count + 1}</td>
                         <td style={{ width: '75%' }}>{party.title}</td>
                         <td>
-                            <ButtonIcon>
-                                <FaSearch />
-                            </ButtonIcon>
+                            <Link href={`/party/${party._id}`}>
+                                <ButtonIcon>
+                                    <FaSearch />
+                                </ButtonIcon>
+                            </Link>
                             <Link href={`/party/edit/${party._id}`}>
                                 <ButtonIcon
                                     color='#009879'

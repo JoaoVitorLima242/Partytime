@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
 
 export const LitleImage = styled.div`
     max-width: 200px;
+    margin-right: 10px;
 
     img {
         width: 100%;
