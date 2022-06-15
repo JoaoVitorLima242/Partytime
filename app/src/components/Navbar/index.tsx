@@ -21,19 +21,18 @@ const Navbar = () => {
               <h2>Partytime</h2>
             </div>
             <ul>
-                <li>
-                    { isAuthenticated
-                      ? <>
-                          <Link href="/dashboard">Dashboard</Link>
-                          <Link href="/profile">Configurações</Link>
-                          <span onClick={() => logOutUser()}>Logout</span>
-                        </>
-                      : <>
-                          <Link href="/login">Login</Link>
-                          <Link href="/register">Cadastro</Link>
-                        </>
-                    }
-                </li>
+              <Link href='/'>Home</Link>
+              { isAuthenticated
+                ? <>
+                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/profile">Configurações</Link>
+                    <span onClick={() => logOutUser()}>Logout</span>
+                  </>
+                : <>
+                    <Link href="/login">Login</Link>
+                    <Link href="/register">Cadastro</Link>
+                  </>
+              }
             </ul>
          </Wrapper>
   )
