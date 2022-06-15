@@ -6,7 +6,7 @@ export type PartyProps = {
     title: string;
     description: string;
     partyDate: Date;
-    photos?: [string];
+    photos?: string[];
     privacy?: boolean;
     userId: string;
 }

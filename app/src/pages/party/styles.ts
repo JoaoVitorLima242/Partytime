@@ -19,7 +19,8 @@ export const Wrapper = styled.div`
         flex-direction: column;
         margin-right: 20px;
         .big {
-            max-width: 300px;
+            max-width: 360px;
+            min-width: 300px;
             height: auto;
             margin-bottom: 20px;
         }

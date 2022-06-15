@@ -7,11 +7,11 @@ interface ButtonInterface {
 export const Button = styled.button<ButtonInterface>`
     font-size: 20px;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 2px;
     color: white;
     margin: 10px 0;
     border: none;
-    background-color: ${({ color }) => color ? `${color}` : '#2F6CEC'};
+    background-color: ${({ color }) => color ? `${color}` : '#303030'};
 `
 export const ButtonIcon = styled.button<ButtonInterface>`
     border: none;
