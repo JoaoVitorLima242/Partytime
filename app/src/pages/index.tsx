@@ -49,8 +49,6 @@ export default Home
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { parties } = await getParties()
 
-  console.log(parties)
-
   return {
     props: {
       parties
