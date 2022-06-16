@@ -29,7 +29,7 @@ export const getParties = async (): Promise<PartiesResponse> => {
   }
 }
 
-export const getPartyByIdRequest = async (id: unknown, ctx?: unknown): Promise<PartyResponse> => {
+export const getPartyByIdRequest = async (id: unknown, ctx?): Promise<PartyResponse> => {
   try {
     if (ctx) {
       const apiCtx = getApiClient(ctx)
