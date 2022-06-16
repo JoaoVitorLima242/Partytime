@@ -25,8 +25,10 @@ class App {
     dotenv.config()
   }
 
+
   private database (): void {
-    mongoose.connect('mongodb://localhost:27017/partytime', {
+    const uri = process.env.MONGO_URI
+    mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
